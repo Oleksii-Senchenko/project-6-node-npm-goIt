@@ -1,0 +1,1 @@
+{"mappings":"AACYA,SAASC,cAAc,QACvBD,SAASC,cAAc","sources":["src/js/refs.js"],"sourcesContent":["const refs = {\n    formEl: document.querySelector('form'),\n    listEl: document.querySelector('ul')\n}\nexport default refs"],"names":["document","querySelector"],"version":3,"file":"index.93a1ae4e.js.map"}
