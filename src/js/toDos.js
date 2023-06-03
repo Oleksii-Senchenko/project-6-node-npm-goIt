@@ -1,10 +1,12 @@
 import refs from './refs';
 import localstorageApi from './localstorage';
+import { renderPage } from './renderPage';
 
 refs.formEl.addEventListener('submit', onClickSubmit);
-
-const items = [];
 const LOCAL_KEY = 'items-to-dos';
+let items = localstorageApi.load(LOCAL_KEY) || [];
+renderPage(items);
+refs.listEl.addEventListener('click', onClickDeleteBtn);
 
 function onClickSubmit(ev) {
   ev.preventDefault();
@@ -12,7 +14,7 @@ function onClickSubmit(ev) {
   const input = ev.currentTarget.elements['user-todos'];
 
   if (input.value.trim() === '') {
-    return alert('Todos souldn`t be empty!');
+    return alert('Todos shouldn`t be empty!');
   }
 
   if (input.value.trim() !== '') {
@@ -32,4 +34,16 @@ function onClickSubmit(ev) {
   localstorageApi.save(LOCAL_KEY, items);
 
   input.value = '';
+  renderPage(items);
+}
+
+function onClickDeleteBtn(evt) {
+  console.log(evt.target.nodeName);
+  if (evt.target.nodeName !== 'BUTTON') {
+    return;
+  }
+  const todosId = Number(evt.target.dataset.id);
+  items = items.filter(el => el.id !== todosId);
+  renderPage(items);
+  localstorageApi.save(LOCAL_KEY, items);
 }
